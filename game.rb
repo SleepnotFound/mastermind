@@ -15,8 +15,10 @@ end
 
 def play_breaker
   puts "playing as breaker"
+  code = Computer.new.com_code
+  puts "computer's code: #{code}"
   #com_code  
-  #user_turn
+  User.new.user_turn(code)
 end
 
 def play_maker
