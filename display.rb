@@ -1,19 +1,22 @@
 module Pieces
   @@pegs = {
     black: "\e[30m\u2714\e[0m",
-    red: "\e[31m\u2B1F\e[0m",
-    green: "\e[32m\u2B1F\e[0m",
-    yellow: "\e[33m\u2B1F\e[0m",
-    blue: "\e[34m\u2B1F\e[0m",
-    magenta: "\e[35m\u2B1F\e[0m",
-    cyan: "\e[36m\u2B1F\e[0m",
+    r: "\e[31m\u2B1F\e[0m",
+    g: "\e[32m\u2B1F\e[0m",
+    y: "\e[33m\u2B1F\e[0m",
+    b: "\e[34m\u2B1F\e[0m",
+    m: "\e[35m\u2B1F\e[0m",
+    c: "\e[36m\u2B1F\e[0m",
     white: "\e[37m\u2714\e[0m"
   }
-  def show_peg(color)
+  def color_pegs(color)
     if color.class == String
       @@pegs[color.to_sym]
-    elsif color.class == Integer
-      #temp might remove    
+    elsif color.class == Array
+      color.map! do |element|
+        @@pegs[element.to_sym]
+      end
+      color.join(" ")
     end
   end
 end
@@ -30,14 +33,14 @@ include Pieces
     The 'maker' is task with creating a 4 color code out of the available colors.
     Repeating colors are OK.
     red(r), green(g), yellow(y), blue(b), magenta(m), cyan(c)
-    #{show_peg("red")} #{show_peg("green")} #{show_peg("yellow")} #{show_peg("blue")} #{show_peg("magenta")} #{show_peg("cyan")}
+    #{color_pegs("r")} #{color_pegs("g")} #{color_pegs("y")} #{color_pegs("b")} #{color_pegs("m")} #{color_pegs("c")}
     
     The 'breaker is task with breaking the code in 12 turns or less!
     After each attempt the breaker will have hints indicating how close they got.
       
     what are the hints?
-    A black checkmark #{show_peg("black")} indicates a correct color in the right position.
-    A white checkmark #{show_peg("white")} indicates a correct color in the wrong position.
+    A black checkmark #{color_pegs("black")} indicates a correct color in the right position.
+    A white checkmark #{color_pegs("white")} indicates a correct color in the wrong position.
     Only 4 clues per attempt.
     the order of clues does not correspond with your attempted order!
   
@@ -45,7 +48,7 @@ include Pieces
   
     Enter 1 to play as 'maker'
     Enter 2 to play as 'breaker'
-    #{show_peg(2)}
+    #{color_pegs(2)}
   HEREDOC
 end
 

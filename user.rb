@@ -4,23 +4,15 @@ class User
   def user_code
     #get valid 4 color code
   end
-  def user_turn(code)
+  def user_turn
     #get valid 4 color combo for comparison
-    puts "computer ready! Start your break attempts! (Enter 4)"
-    puts "red(r), green(g), yellow(y), blue(b), magenta(m), cyan(c)"
+    puts "computer ready! Enter 4: (r, g, y, b, m, c)"
     attempt = gets.chomp.downcase.split
-    puts "your attempt:#{attempt}"
+    puts "your attempt:#{color_pegs(attempt.clone)}"
     if confirm(attempt)
-      puts "comparing time"
-      attempt.each_with_index do |input,idx|
-        if code.include?(input)
-          input == code[idx] ? (puts show_peg("black")) : (puts show_peg("white"))
-          #award black clues first, white clues second. delete any matches in each check
-        else puts "no clue"
-        end
-      end
+      attempt
     else
-      puts "wrong message here"
+      puts "wrong input. allow spaces between"
       user_turn
     end
   end
@@ -36,3 +28,4 @@ def confirm(ans)
     return false
   end
 end
+
