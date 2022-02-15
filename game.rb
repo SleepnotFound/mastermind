@@ -19,14 +19,16 @@ class Game
 end
 
 def play_breaker
-  puts "playing as breaker"
-  round = 12
+  puts "\e[4mplaying as breaker\e[0m"
+  round = 10
   @password = Computer.new.gen_code
-  puts "computer's code: #{color_pegs(password.clone)}"
-  until attempt == password || round == 13
-    puts "round:#{round}"
+  puts "computer ready! Enter 4 colors (r, g, y, b, m, c)"
+  #puts "computer's code: #{color_pegs(password.clone)}"
+  until attempt == password || round > 12
+    puts round == 12 ? "\e[1mLast round!!\e[0m" : "round:#{round}"
     @attempt = User.new.user_turn
-    find_clues(self.password.clone, self.attempt.clone)
+    clues = find_clues(self.password.clone, self.attempt.clone)
+    puts "Attempt:#{color_pegs(attempt.clone)}  Clues:#{color_pegs(clues)}"
     round += 1
   end
   results
@@ -42,10 +44,10 @@ def play_maker
 end
 
 def find_clues(pass, guess)
-  puts "Your clues:"
+  clues = []
   guess.map.with_index do |input,idx|
     if input == pass[idx]
-      puts "#{color_pegs("black")}"
+      clues.push("black")
       pass[idx] = "X"
       guess[idx] = "X"
     end
@@ -54,16 +56,17 @@ def find_clues(pass, guess)
   guess.delete("X")
   guess.each do |g|
     if pass.include?(g)
-      puts "#{color_pegs("white")}"
+      clues.push("white")
       pass.delete_at(pass.index(g))
     end
   end
+  return clues
 end
 
 def results
   if attempt == password
-    puts mode == "1" ? "you lost" : "you won"
+    puts mode == "1" ? "you lose!" : "you win!"
   else
-    puts mode == "1" ? "you won" : "you lost"
+    puts mode == "1" ? "you win!" : "you lose! computer code:#{color_pegs(password.clone)}"
   end
 end

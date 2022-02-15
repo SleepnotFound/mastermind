@@ -35,20 +35,21 @@ include Pieces
     red(r), green(g), yellow(y), blue(b), magenta(m), cyan(c)
     #{color_pegs("r")} #{color_pegs("g")} #{color_pegs("y")} #{color_pegs("b")} #{color_pegs("m")} #{color_pegs("c")}
     
-    The 'breaker is task with breaking the code in 12 turns or less!
+    The 'breaker' is task with breaking the code in 12 turns or less!
     After each attempt the breaker will have hints indicating how close they got.
+    To enter colors, refer to the first letter only and space them out.
+    Example: inputing r b y c is the same as red, blue, yellow, cyan (#{color_pegs(["r","b","y","c"])} ).
       
-    what are the hints?
+    What are the hints?
     A black checkmark #{color_pegs("black")} indicates a correct color in the right position.
     A white checkmark #{color_pegs("white")} indicates a correct color in the wrong position.
     Only 4 clues per attempt.
-    the order of clues does not correspond with your attempted order!
+    The order of clues does not correspond with your attempted order!
   
     Goodluck!
   
     Enter 1 to play as 'maker'
     Enter 2 to play as 'breaker'
-    #{color_pegs(2)}
   HEREDOC
 end
 
