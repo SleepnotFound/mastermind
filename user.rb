@@ -1,9 +1,6 @@
 class User
   include Pieces
 
-  def user_code
-    #get valid 4 color code
-  end
   def user_turn
     attempt = gets.chomp.downcase.split
     if confirm(attempt)

@@ -9,8 +9,16 @@ class Game
   end
   def mode_selection
     @mode = gets.chomp
-    if self.mode == "1" then play_maker 
-    elsif self.mode == "2" then play_breaker 
+    if mode == "1"
+      puts "\e[4mplaying as maker\e[0m"
+      puts "Enter your password"
+      @password = User.new.user_turn
+      play_round 
+    elsif mode == "2"
+      puts "\e[4mplaying as breaker\e[0m"
+      puts "Computer reay! Start decoding."
+      @password = Computer.new.gen_code
+      play_round 
     else 
       puts "Not a valid choice. Enter 1 for 'maker' or 2 for 'breaker'"
       mode_selection 
@@ -18,29 +26,16 @@ class Game
   end
 end
 
-def play_breaker
-  puts "\e[4mplaying as breaker\e[0m"
-  round = 10
-  @password = Computer.new.gen_code
-  puts "computer ready! Enter 4 colors (r, g, y, b, m, c)"
-  #puts "computer's code: #{color_pegs(password.clone)}"
+def play_round
+  round = 1
   until attempt == password || round > 12
     puts round == 12 ? "\e[1mLast round!!\e[0m" : "round:#{round}"
-    @attempt = User.new.user_turn
+    @attempt = mode == "1" ? Computer.new.gen_code : User.new.user_turn
     clues = find_clues(self.password.clone, self.attempt.clone)
     puts "Attempt:#{color_pegs(attempt.clone)}  Clues:#{color_pegs(clues)}"
     round += 1
   end
   results
-  #puts "originals: #{password} vs #{attempt}"
-end
-
-def play_maker
-  puts "playing as maker"
-  #user makes code/validate 
-  #computer makes a turn
-  #if com guess is right end game
-  #else repeate com turn
 end
 
 def find_clues(pass, guess)
@@ -67,6 +62,6 @@ def results
   if attempt == password
     puts mode == "1" ? "you lose!" : "you win!"
   else
-    puts mode == "1" ? "you win!" : "you lose! computer code:#{color_pegs(password.clone)}"
+    puts mode == "1" ? "you win! Your code:#{color_pegs(password.clone)}" : "you lose! Computer code:#{color_pegs(password.clone)}"
   end
 end
