@@ -1,7 +1,7 @@
-require_relative 'display.rb'
-require_relative 'user.rb'
-require_relative 'computer.rb'
-require_relative 'game.rb'
+require_relative 'display'
+require_relative 'user'
+require_relative 'computer'
+require_relative 'game'
 
 puts instructions
 Game.new

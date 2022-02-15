@@ -1,12 +1,10 @@
 class User
-  include Pieces
-
   def user_turn
     attempt = gets.chomp.downcase.split
     if confirm(attempt)
       attempt
     else
-      puts "wrong input. Try again"
+      puts 'wrong input. Try again'
       user_turn
     end
   end
@@ -18,8 +16,7 @@ def confirm(ans)
     ans.all? do |i|
       correct.include?(i)
     end
-  else 
-    return false
+  else
+    false
   end
 end
-
